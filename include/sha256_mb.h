@@ -124,12 +124,14 @@ extern "C" {
 #define SHA256_BLOCK_SIZE		64
 #define SHA256_LOG2_BLOCK_SIZE		6
 #define SHA256_PADLENGTHFIELD_SIZE	8
-#define SHA256_INITIAL_DIGEST		\
+#define SHA256_INITIAL_DIGEST				\
 	0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, \
 	0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
-#define SHA224_INITIAL_DIGEST		\
+
+#define SHA224_INITIAL_DIGEST				\
 	0xc1059ed8, 0x367CD507, 0x3070DD17, 0xF70E5939, \
 	0xFFC00B31, 0x68581511, 0x64F98FA7, 0xBEFA4FA4
+#define SHA224_DIGEST_NWORDS		7
 
 typedef uint32_t sha256_digest_array[SHA256_DIGEST_NWORDS][SHA256_MAX_LANES];
 typedef uint32_t SHA256_WORD_T;
@@ -432,6 +434,18 @@ SHA256_HASH_CTX* sha256_ctx_mgr_submit_avx512_ni (SHA256_HASH_CTX_MGR* mgr, SHA2
  * @returns NULL if no jobs to complete or pointer to jobs structure.
  */
 SHA256_HASH_CTX* sha256_ctx_mgr_flush_avx512_ni (SHA256_HASH_CTX_MGR* mgr);
+
+/**
+ * @brief Copy the result digest out of the context.
+ *
+ * The minimum of len and the number of words in the digest will be
+ * copied into dst.
+ *
+ * @param   ctx Structure holding ctx job info
+ * @param   dst A buffer to hold the result.
+ * @param   len Length of the result buffer (in SHA256_HASH_Ts).
+ */
+void sha256_ctx_digest(SHA256_HASH_CTX* ctx, SHA256_WORD_T *dst, uint32_t len);
 
 
 /*******************************************************************

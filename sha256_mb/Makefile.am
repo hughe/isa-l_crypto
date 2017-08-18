@@ -27,6 +27,8 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ########################################################################
 
+lsrc += sha256_mb/sha256_mb_get.c
+
 lsrc += sha256_mb/sha256_ctx_sse.c \
 	sha256_mb/sha256_ctx_avx.c \
 	sha256_mb/sha256_ctx_avx2.c
@@ -60,6 +62,7 @@ lsrc += sha256_mb/sha256_ni_x1.asm \
 	sha256_mb/sha256_mb_mgr_submit_sse_ni.asm \
 	sha256_mb/sha256_mb_mgr_flush_sse_ni.asm \
 	sha256_mb/sha256_mb_mgr_flush_avx512_ni.asm
+
 
 src_include += -I $(srcdir)/sha256_mb
 
