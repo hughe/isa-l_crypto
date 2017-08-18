@@ -142,6 +142,7 @@ typedef struct {
 	DECLARE_ALIGNED(uint32_t result_digest[SHA256_DIGEST_NWORDS], 64);
 	JOB_STS status;		//!< output job status
 	void*   user_data;	//!< pointer for user's job-related data
+	int32_t is224;          //!< is this job for SHA224 (really a bool)
 } SHA256_JOB;
 
 /** @brief Scheduler layer -  Holds arguments for submitted SHA256 job */

@@ -60,6 +60,7 @@ FIELD	_len,				8,	8	; length in bytes
 FIELD	_result_digest,			8*4,	64	; Digest (output)
 FIELD	_status,			4,	4
 FIELD	_user_data,			8,	8
+FIELD   _is224,				4,	4	; SHA224 if true
 
 %assign _SHA256_JOB_size	_FIELD_OFFSET
 %assign _SHA256_JOB_align	_STRUCT_ALIGN
