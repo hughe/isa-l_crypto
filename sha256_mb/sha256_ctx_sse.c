@@ -35,7 +35,7 @@
 # define inline __inline
 #endif
 
-static inline void hash_init_digest(SHA256_WORD_T * digest);
+static inline void hash_init_digest(SHA256_HASH_CTX * ctx);
 static inline uint32_t hash_pad(uint8_t padblock[SHA256_BLOCK_SIZE * 2], uint32_t total_len);
 static SHA256_HASH_CTX *sha256_ctx_mgr_resubmit(SHA256_HASH_CTX_MGR * mgr,
 						SHA256_HASH_CTX * ctx);
@@ -46,8 +46,8 @@ void sha256_ctx_mgr_init_sse(SHA256_HASH_CTX_MGR * mgr)
 }
 
 SHA256_HASH_CTX *sha256_ctx_mgr_submit_sse(SHA256_HASH_CTX_MGR * mgr, SHA256_HASH_CTX * ctx,
-					   const void *buffer, uint32_t len,
-					   HASH_CTX_FLAG flags)
+					   const void *buffer, uint32_t len, HASH_CTX_FLAG flags,
+					   int32_t is224)
 {
 
 	if (flags & (~HASH_ENTIRE)) {
@@ -70,7 +70,9 @@ SHA256_HASH_CTX *sha256_ctx_mgr_submit_sse(SHA256_HASH_CTX_MGR * mgr, SHA256_HAS
 
 	if (flags & HASH_FIRST) {
 		// Init digest
-		hash_init_digest(ctx->job.result_digest);
+		ctx->job.is224 = is224;
+
+		hash_init_digest(ctx);
 
 		// Reset byte counter
 		ctx->total_length = 0;
@@ -213,11 +215,18 @@ static SHA256_HASH_CTX *sha256_ctx_mgr_resubmit(SHA256_HASH_CTX_MGR * mgr,
 	return NULL;
 }
 
-static inline void hash_init_digest(SHA256_WORD_T * digest)
+static inline void hash_init_digest(SHA256_HASH_CTX * ctx)
 {
 	static const SHA256_WORD_T hash_initial_digest[SHA256_DIGEST_NWORDS] =
 	    { SHA256_INITIAL_DIGEST };
-	memcpy_fixedlen(digest, hash_initial_digest, sizeof(hash_initial_digest));
+	static const SHA256_WORD_T hash_initial_digest_224[SHA256_DIGEST_NWORDS] =
+	    { SHA224_INITIAL_DIGEST };
+
+	if (ctx -> job.is224 != 0) { 
+		memcpy_fixedlen(ctx -> job.result_digest, hash_initial_digest_224, sizeof(hash_initial_digest_224));
+	} else {
+		memcpy_fixedlen(ctx -> job.result_digest, hash_initial_digest, sizeof(hash_initial_digest));
+	}
 }
 
 static inline uint32_t hash_pad(uint8_t padblock[SHA256_BLOCK_SIZE * 2], uint32_t total_len)

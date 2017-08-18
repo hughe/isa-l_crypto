@@ -208,6 +208,7 @@ void      sha256_ctx_mgr_init   (SHA256_HASH_CTX_MGR* mgr);
  * @param  buffer Pointer to buffer to be processed
  * @param  len Length of buffer (in bytes) to be processed
  * @param  flags Input flag specifying job type (first, update, last or entire)
+ * @param  is224 Calculate the SHA224 hash if true, otherwise calculate SHA256.
  * @returns NULL if no jobs complete or pointer to jobs structure.
  */
 SHA256_HASH_CTX* sha256_ctx_mgr_submit (SHA256_HASH_CTX_MGR* mgr, SHA256_HASH_CTX* ctx,
@@ -246,10 +247,12 @@ void      sha256_ctx_mgr_init_sse   (SHA256_HASH_CTX_MGR* mgr);
  * @param  buffer Pointer to buffer to be processed
  * @param  len Length of buffer (in bytes) to be processed
  * @param  flags Input flag specifying job type (first, update, last or entire)
+ * @param  is224 Calculate the SHA224 hash if true, otherwise calculate SHA256.
  * @returns NULL if no jobs complete or pointer to jobs structure.
  */
 SHA256_HASH_CTX* sha256_ctx_mgr_submit_sse (SHA256_HASH_CTX_MGR* mgr, SHA256_HASH_CTX* ctx,
-					const void* buffer, uint32_t len, HASH_CTX_FLAG flags);
+					    const void* buffer, uint32_t len, HASH_CTX_FLAG flags,
+					    int32_t is224);
 
 /**
  * @brief Finish all submitted SHA256 jobs and return when complete.
@@ -278,10 +281,12 @@ void      sha256_ctx_mgr_init_sse_ni (SHA256_HASH_CTX_MGR* mgr);
  * @param  buffer Pointer to buffer to be processed
  * @param  len Length of buffer (in bytes) to be processed
  * @param  flags Input flag specifying job type (first, update, last or entire)
+ * @param  is224 Calculate the SHA224 hash if true, otherwise calculate SHA256.
  * @returns NULL if no jobs complete or pointer to jobs structure.
  */
 SHA256_HASH_CTX* sha256_ctx_mgr_submit_sse_ni (SHA256_HASH_CTX_MGR* mgr, SHA256_HASH_CTX* ctx,
-				const void* buffer, uint32_t len, HASH_CTX_FLAG flags);
+					       const void* buffer, uint32_t len, HASH_CTX_FLAG flags,
+					       int32_t is224);
 
 /**
  * @brief Finish all submitted SHA256 jobs and return when complete.
@@ -310,6 +315,7 @@ void      sha256_ctx_mgr_init_avx   (SHA256_HASH_CTX_MGR* mgr);
  * @param  buffer Pointer to buffer to be processed
  * @param  len Length of buffer (in bytes) to be processed
  * @param  flags Input flag specifying job type (first, update, last or entire)
+ * @param  is224 Calculate the SHA224 hash if true, otherwise calculate SHA256.
  * @returns NULL if no jobs complete or pointer to jobs structure.
  */
 SHA256_HASH_CTX* sha256_ctx_mgr_submit_avx (SHA256_HASH_CTX_MGR* mgr, SHA256_HASH_CTX* ctx,
@@ -343,10 +349,12 @@ void      sha256_ctx_mgr_init_avx2   (SHA256_HASH_CTX_MGR* mgr);
  * @param  buffer Pointer to buffer to be processed
  * @param  len Length of buffer (in bytes) to be processed
  * @param  flags Input flag specifying job type (first, update, last or entire)
+ * @param  is224 Calculate the SHA224 hash if true, otherwise calculate SHA256. 
  * @returns NULL if no jobs complete or pointer to jobs structure.
  */
 SHA256_HASH_CTX* sha256_ctx_mgr_submit_avx2 (SHA256_HASH_CTX_MGR* mgr, SHA256_HASH_CTX* ctx,
-					const void* buffer, uint32_t len, HASH_CTX_FLAG flags);
+					     const void* buffer, uint32_t len, HASH_CTX_FLAG flags,
+					     int32_t is224);
 
 /**
  * @brief Finish all submitted SHA256 jobs and return when complete.
@@ -375,10 +383,12 @@ void      sha256_ctx_mgr_init_avx512   (SHA256_HASH_CTX_MGR* mgr);
  * @param  buffer Pointer to buffer to be processed
  * @param  len Length of buffer (in bytes) to be processed
  * @param  flags Input flag specifying job type (first, update, last or entire)
+ * @param  is224 Calculate the SHA224 hash if true, otherwise calculate SHA256.
  * @returns NULL if no jobs complete or pointer to jobs structure.
  */
 SHA256_HASH_CTX* sha256_ctx_mgr_submit_avx512 (SHA256_HASH_CTX_MGR* mgr, SHA256_HASH_CTX* ctx,
-					const void* buffer, uint32_t len, HASH_CTX_FLAG flags);
+					       const void* buffer, uint32_t len, HASH_CTX_FLAG flags,
+					       int32_t is224);
 
 /**
  * @brief Finish all submitted SHA256 jobs and return when complete.
@@ -407,10 +417,12 @@ void      sha256_ctx_mgr_init_avx512_ni (SHA256_HASH_CTX_MGR* mgr);
  * @param  buffer Pointer to buffer to be processed
  * @param  len Length of buffer (in bytes) to be processed
  * @param  flags Input flag specifying job type (first, update, last or entire)
+ * @param  is224 Calculate the SHA224 hash if true, otherwise calculate SHA256.
  * @returns NULL if no jobs complete or pointer to jobs structure.
  */
 SHA256_HASH_CTX* sha256_ctx_mgr_submit_avx512_ni (SHA256_HASH_CTX_MGR* mgr, SHA256_HASH_CTX* ctx,
-				const void* buffer, uint32_t len, HASH_CTX_FLAG flags);
+						  const void* buffer, uint32_t len, HASH_CTX_FLAG flags,
+						  int32_t is224);
 
 /**
  * @brief Finish all submitted SHA256 jobs and return when complete.
