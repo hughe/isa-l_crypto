@@ -88,7 +88,7 @@ int main(void)
 		sha256_ref(bufs[i], digest_ref[i], TEST_LEN);
 
 		// Run sb_sha256 test
-		sha256_ctx_mgr_submit(mgr, &ctxpool[i], bufs[i], TEST_LEN, HASH_ENTIRE);
+		sha256_ctx_mgr_submit(mgr, &ctxpool[i], bufs[i], TEST_LEN, HASH_ENTIRE, 0);
 	}
 
 	while (sha256_ctx_mgr_flush(mgr)) ;
@@ -124,7 +124,7 @@ int main(void)
 			sha256_ref(bufs[i], digest_ref[i], lens[i]);
 
 			// Run sha256_mb test
-			sha256_ctx_mgr_submit(mgr, &ctxpool[i], bufs[i], lens[i], HASH_ENTIRE);
+			sha256_ctx_mgr_submit(mgr, &ctxpool[i], bufs[i], lens[i], HASH_ENTIRE, 0);
 		}
 
 		while (sha256_ctx_mgr_flush(mgr)) ;
@@ -170,7 +170,7 @@ int main(void)
 		sha256_ref(bufs[i], digest_ref[i], lens[i]);
 
 		// sb_sha256 test
-		sha256_ctx_mgr_submit(mgr, &ctxpool[i], bufs[i], lens[i], HASH_ENTIRE);
+		sha256_ctx_mgr_submit(mgr, &ctxpool[i], bufs[i], lens[i], HASH_ENTIRE, 0);
 	}
 
 	while (sha256_ctx_mgr_flush(mgr)) ;

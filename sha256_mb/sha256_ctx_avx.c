@@ -47,7 +47,7 @@ void sha256_ctx_mgr_init_avx(SHA256_HASH_CTX_MGR * mgr)
 
 SHA256_HASH_CTX *sha256_ctx_mgr_submit_avx(SHA256_HASH_CTX_MGR * mgr, SHA256_HASH_CTX * ctx,
 					   const void *buffer, uint32_t len,
-					   HASH_CTX_FLAG flags)
+					   HASH_CTX_FLAG flags, int32_t is224)
 {
 	if (flags & (~HASH_ENTIRE)) {
 		// User should not pass anything other than FIRST, UPDATE, or LAST
@@ -69,6 +69,8 @@ SHA256_HASH_CTX *sha256_ctx_mgr_submit_avx(SHA256_HASH_CTX_MGR * mgr, SHA256_HAS
 
 	if (flags & HASH_FIRST) {
 		// Init digest
+		ctx->job.is224 = is224;
+
 		hash_init_digest(ctx);
 
 		// Reset byte counter

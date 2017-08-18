@@ -107,13 +107,14 @@ int main(void)
 	// Init contexts before first use
 	for (i = 0; i < MSGS; i++) {
 		hash_ctx_init(&ctxpool[i]);
+		ctxpool[i].job.is224 = 0;
 		ctxpool[i].user_data = (void *)((uint64_t) i);
 	}
 
 	for (i = 0; i < MSGS; i++) {
 		ctx = sha256_ctx_mgr_submit(mgr,
 					    &ctxpool[i],
-					    msgs[i], strlen((char *)msgs[i]), HASH_ENTIRE);
+					    msgs[i], strlen((char *)msgs[i]), HASH_ENTIRE, 0);
 
 		if (ctx) {
 			t = (unsigned long)(ctx->user_data);
@@ -166,6 +167,7 @@ int main(void)
 	// Init contexts before first use
 	for (i = 0; i < NUM_JOBS; i++) {
 		hash_ctx_init(&ctxpool[i]);
+		ctxpool[i].job.is224 = 0;
 		ctxpool[i].user_data = (void *)((uint64_t) i);
 	}
 
@@ -174,7 +176,7 @@ int main(void)
 		j = PSEUDO_RANDOM_NUM(i);
 		ctx = sha256_ctx_mgr_submit(mgr,
 					    &ctxpool[i],
-					    msgs[j], strlen((char *)msgs[j]), HASH_ENTIRE);
+					    msgs[j], strlen((char *)msgs[j]), HASH_ENTIRE, 0);
 		if (ctx) {
 			t = (unsigned long)(ctx->user_data);
 			k = PSEUDO_RANDOM_NUM(t);

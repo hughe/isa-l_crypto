@@ -105,7 +105,7 @@ int main(void)
 		sha256_ref(bufs[i], digest_ref[i], lens[i]);
 
 		// Run sb_sha256 test
-		sha256_ctx_mgr_submit(mgr, &ctxpool[i], bufs[i], lens[i], HASH_ENTIRE);
+		sha256_ctx_mgr_submit(mgr, &ctxpool[i], bufs[i], lens[i], HASH_ENTIRE, 0);
 	}
 
 	printf("Changes of lens inside mgr:\n");

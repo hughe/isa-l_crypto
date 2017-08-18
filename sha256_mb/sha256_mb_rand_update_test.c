@@ -108,15 +108,15 @@ int main(void)
 		if (len_done == 0)
 			ctx = sha256_ctx_mgr_submit(mgr,
 						    &ctxpool[i],
-						    buf_ptr[i], UPDATE_SIZE, HASH_FIRST);
+						    buf_ptr[i], UPDATE_SIZE, HASH_FIRST, 0);
 		else if (len_rem <= UPDATE_SIZE)
 			ctx = sha256_ctx_mgr_submit(mgr,
 						    &ctxpool[i],
-						    buf_ptr[i], len_rem, HASH_LAST);
+						    buf_ptr[i], len_rem, HASH_LAST, 0);
 		else
 			ctx = sha256_ctx_mgr_submit(mgr,
 						    &ctxpool[i],
-						    buf_ptr[i], UPDATE_SIZE, HASH_UPDATE);
+						    buf_ptr[i], UPDATE_SIZE, HASH_UPDATE, 0);
 
 		// Add jobs while available or finished
 		if ((ctx == NULL) || hash_ctx_complete(ctx)) {
@@ -147,11 +147,11 @@ int main(void)
 		if (len_rem <= UPDATE_SIZE)
 			ctx = sha256_ctx_mgr_submit(mgr,
 						    &ctxpool[i],
-						    buf_ptr[i], len_rem, HASH_LAST);
+						    buf_ptr[i], len_rem, HASH_LAST, 0);
 		else
 			ctx = sha256_ctx_mgr_submit(mgr,
 						    &ctxpool[i],
-						    buf_ptr[i], UPDATE_SIZE, HASH_UPDATE);
+						    buf_ptr[i], UPDATE_SIZE, HASH_UPDATE, 0);
 
 		if (ctx == NULL)
 			ctx = sha256_ctx_mgr_flush(mgr);
@@ -194,11 +194,11 @@ int main(void)
 			if (lens[i] > len_rand)
 				ctx = sha256_ctx_mgr_submit(mgr,
 							    &ctxpool[i],
-							    buf_ptr[i], len_rand, HASH_FIRST);
+							    buf_ptr[i], len_rand, HASH_FIRST, 0);
 			else
 				ctx = sha256_ctx_mgr_submit(mgr,
 							    &ctxpool[i],
-							    buf_ptr[i], lens[i], HASH_ENTIRE);
+							    buf_ptr[i], lens[i], HASH_ENTIRE, 0);
 
 			// Returned ctx could be:
 			//  - null context (we are just getting started and lanes aren't full yet), or
@@ -223,13 +223,15 @@ int main(void)
 									    &ctxpool[j],
 									    buf_ptr[j],
 									    len_rem,
-									    HASH_LAST);
+									    HASH_LAST,
+									    0);
 					else	// submit the random update length as UPDATE
 						ctx = sha256_ctx_mgr_submit(mgr,
 									    &ctxpool[j],
 									    buf_ptr[j],
 									    len_rand,
-									    HASH_UPDATE);
+									    HASH_UPDATE,
+									    0);
 				}	// Either continue submitting any contexts returned here as UPDATE/LAST, or
 				// go back to submitting new jobs using the index i.
 
@@ -255,11 +257,11 @@ int main(void)
 			if (len_rem <= len_rand)
 				ctx = sha256_ctx_mgr_submit(mgr,
 							    &ctxpool[i],
-							    buf_ptr[i], len_rem, HASH_LAST);
+							    buf_ptr[i], len_rem, HASH_LAST, 0);
 			else
 				ctx = sha256_ctx_mgr_submit(mgr,
 							    &ctxpool[i],
-							    buf_ptr[i], len_rand, HASH_UPDATE);
+							    buf_ptr[i], len_rand, HASH_UPDATE, 0);
 
 			if (ctx == NULL)
 				ctx = sha256_ctx_mgr_flush(mgr);

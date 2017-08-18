@@ -97,7 +97,7 @@ int main(void)
 	for (t = 0; t < TEST_LOOPS; t++) {
 		for (i = 0; i < TEST_BUFS; i++)
 			sha256_ctx_mgr_submit(mgr,
-					      &ctxpool[i], bufs[i], TEST_LEN, HASH_ENTIRE);
+					      &ctxpool[i], bufs[i], TEST_LEN, HASH_ENTIRE, 0);
 
 		while (sha256_ctx_mgr_flush(mgr)) ;
 	}

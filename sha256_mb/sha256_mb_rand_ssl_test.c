@@ -91,7 +91,7 @@ int main(void)
 		SHA256(bufs[i], TEST_LEN, digest_ssl[i]);
 
 		// sb_sha256 test
-		sha256_ctx_mgr_submit(mgr, &ctxpool[i], bufs[i], TEST_LEN, HASH_ENTIRE);
+		sha256_ctx_mgr_submit(mgr, &ctxpool[i], bufs[i], TEST_LEN, HASH_ENTIRE, 0);
 	}
 
 	while (sha256_ctx_mgr_flush(mgr)) ;
@@ -124,7 +124,7 @@ int main(void)
 			SHA256(bufs[i], lens[i], digest_ssl[i]);
 
 			// Run sb_sha256 test
-			sha256_ctx_mgr_submit(mgr, &ctxpool[i], bufs[i], lens[i], HASH_ENTIRE);
+			sha256_ctx_mgr_submit(mgr, &ctxpool[i], bufs[i], lens[i], HASH_ENTIRE, 0);
 		}
 
 		while (sha256_ctx_mgr_flush(mgr)) ;
